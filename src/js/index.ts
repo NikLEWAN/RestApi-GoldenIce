@@ -3,54 +3,56 @@ import axios, {
     AxiosError
 } from "../../node_modules/axios/index"
 
-interface ICar {
+interface Iicecream {
     id: number
-    model: string
-    vendor: string
+    name: string
+    description: string
+    imgUrl: string
     price: number
+    size: string
 }
 
-let baseUri: string = "http://anbo-carsrest.azurewebsites.net/api/cars"
+let baseUri: string = "https://goldenice20200505111435.azurewebsites.net/api/IceCreams"
 
 new Vue({
     el: "#app",
     data: {
-        cars: [],
+        icecreams: [],
         errors: [],
         deleteId: 0,
         deleteMessage: "",
-        formData: { model: "", vendor: "", price: 0 },
+        formData: { name: "", description: "", imgUrl: "", description: "", price: 0, size: "" },
         addMessage: ""
     },
     methods: {
-        getAllCars() {
-            axios.get<ICar[]>(baseUri)
-                .then((response: AxiosResponse<ICar[]>) => {
-                    this.cars = response.data
+        getAllicecreams() {
+            axios.get<Iicecream[]>(baseUri)
+                .then((response: AxiosResponse<Iicecream[]>) => {
+                    this.icecreams = response.data
                 })
                 .catch((error: AxiosError) => {
                     //this.message = error.message
                     alert(error.message) // https://www.w3schools.com/js/js_popup.asp
                 })
         },
-        deleteCar(deleteId: number) {
+        deleteicecream(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
             axios.delete<void>(uri)
                 .then((response: AxiosResponse<void>) => {
                     this.deleteMessage = response.status + " " + response.statusText
-                    this.getAllCars()
+                    this.getAllicecreams()
                 })
                 .catch((error: AxiosError) => {
                     //this.deleteMessage = error.message
                     alert(error.message)
                 })
         },
-        addCar() {
-            axios.post<ICar>(baseUri, this.formData)
+        addicecream() {
+            axios.post<Iicecream>(baseUri, this.formData)
                 .then((response: AxiosResponse) => {
                     let message: string = "response " + response.status + " " + response.statusText
                     this.addMessage = message
-                    this.getAllCars()
+                    this.getAllicecreams()
                 })
                 .catch((error: AxiosError) => {
                     // this.addMessage = error.message
